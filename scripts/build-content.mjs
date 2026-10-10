@@ -1,0 +1,10 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {services,packages} from '../components/data.js';
+const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+const serviceCards=services.map(([number,title,description,icon],i)=>`<div class="tilt-frame"><article class="service-card depth-card"><span class="card-number">${number}</span><span class="service-icon" aria-hidden="true">${['⌘','▣','↗','◈','◎','✳'][i]}</span><h3>${escape(title)}</h3><p>${escape(description)}</p><a href="${Number(number)>3?'#contact':'#pricing'}">${Number(number)>3?'Discuss this service':'Explore pricing'} ${icon}</a></article></div>`).join('\n');
+html=html.replace(/<div id="service-grid" class="grid">[\s\S]*?<\/div><!-- services-end -->/,`<div id="service-grid" class="grid">${serviceCards}</div><!-- services-end -->`);
+const panels=Object.entries(packages).map(([category,items])=>`<div id="prices-${category}" class="price-panel"><h3 class="package-category">${category==='digital'?'Web & app development':'Resume & LinkedIn packages'}</h3><div class="grid">${items.map(item=>`<div class="tilt-frame"><article class="price-card depth-card"><h3>${escape(item.name)}</h3><p class="muted">${escape(item.label)}</p><p class="price">${escape(item.price)}<small> SAR</small></p><ul>${item.features.map(feature=>`<li>${escape(feature)}</li>`).join('')}</ul><a class="button" href="https://wa.me/966538113796?text=${encodeURIComponent(`Hello Mad Labs, I'm interested in the ${item.name} package.`)}">Discuss this package ↗</a></article></div>`).join('\n')}</div></div>`).join('\n');
+html=html.replace(/<div id="price-grid">[\s\S]*?<\/div><!-- prices-end -->/,`<div id="price-grid">${panels}</div><!-- prices-end -->`);
+writeFileSync(new URL('../index.html',import.meta.url),html);
+console.log('Generated crawlable service and pricing components.');

@@ -17,7 +17,7 @@ export function initMotion(){
     smoother=ScrollSmoother.create({wrapper:'#smooth-wrapper',content:'#smooth-content',smooth:1.35,effects:true,smoothTouch:0,ignoreMobileResize:true});
    }
    for(const heading of document.querySelectorAll('.words-in')){
-    const original=heading.textContent;
+    const original=heading.getAttribute('aria-label') || heading.innerText;
     heading.setAttribute('aria-label',original);
     const walker=document.createTreeWalker(heading,NodeFilter.SHOW_TEXT);const nodes=[];
     if(!heading.querySelector('.word'))while(walker.nextNode())nodes.push(walker.currentNode);
@@ -30,7 +30,7 @@ export function initMotion(){
     }
     gsap.from(heading.querySelectorAll('.word'),{duration:.4,delay:.3,opacity:0,rotationX:10,x:50,transformOrigin:'top center -50',stagger:.1,scrollTrigger:{trigger:heading,start:'top 90%',once:true}});
    }
-   for(const element of document.querySelectorAll('.section-heading,.service-card,.price-card,.process article,.hero-button,.hero-bottom,.faq details,.contact h2')){
+   for(const element of document.querySelectorAll('.section-heading,.tilt-frame,.process article,.hero-button,.hero-bottom,.faq details,.contact h2')){
     gsap.from(element,{opacity:0,y:30,duration:.4,delay:.15,ease:'power2.out',scrollTrigger:{trigger:element,start:'top 90%',once:true}});
    }
    for(const container of document.querySelectorAll('.image-reveal')){

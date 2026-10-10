@@ -18,7 +18,12 @@ Career packages: SAR 49 / 99 / 149, from the supplied poster. Development: propo
 Illustrative Unsplash stock photography, not client work. Hero: https://images.unsplash.com/photo-1497366754035-f200968a6e72 . About: https://images.unsplash.com/photo-1498050108023-c5249f4df085 . The supplied template hero image was a placeholder.
 
 ## Verification
-JavaScript syntax and local image/font/script/navigation references checked. Browser automation is blocked by an admin policy verification failure, so responsive appearance and runtime animation behavior require browser verification.
+JavaScript syntax, local references, JSON-LD and sitemap XML checked. Browser checks passed for pricing selection, mobile menu, desktop navigation and horizontal overflow at 320, 390, 768 and 1280 pixels. No browser console errors were reported during these checks.
 
 ## Before production
-Confirm domain, business identity, service scope, prices, privacy/legal content and contact details. Add dedicated service pages, crawlable service/pricing content, production canonical URLs, sitemap, robots rules, verified structured data, social previews and analytics. Preview deliberately remains noindex. Nothing pushed or deployed.
+Confirm domain, business identity, service scope, prices, privacy/legal content and contact details. Add dedicated service pages, crawlable service/pricing content, production canonical URLs, sitemap, robots rules, verified structured data, social previews and analytics. Production metadata uses https://mad-labs-beryl.vercel.app/. Update canonical, social metadata, structured data, robots.txt and sitemap.xml together if a custom domain is added.
+
+## SEO and depth update
+Service and pricing content is generated into `index.html` by `node scripts/build-content.mjs`; run it after changing `components/data.js`. Both pricing categories are readable without JavaScript; category controls progressively enhance the page. `robots.txt`, `sitemap.xml`, canonical/social metadata and Organization/WebSite JSON-LD are included. Submit the sitemap in Google Search Console after ownership verification.
+
+`components/depth.js` adds cursor-following card tilt and light with requestAnimationFrame throttling. Touch pointers and reduced-motion users receive static cards. The decorative CSS orbital sculpture is hidden from assistive technology and requires no WebGL or new libraries.
